@@ -3,8 +3,5 @@ import { FC } from 'react';
 import { StyleSheetManager } from 'styled-components';
 
 export const App: FC = () => {
-  return (
-    <StyleSheetManager shouldForwardProp={(prop) => isPropValid(prop)}>
-    </StyleSheetManager>
-  );
+  return <StyleSheetManager shouldForwardProp={(prop) => isPropValid(prop)} />;
 };

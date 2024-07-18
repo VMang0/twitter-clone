@@ -15,7 +15,6 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:import/typescript',
-    'plugin:storybook/recommended',
     'plugin:react-hooks/recommended',
   ],
   plugins: [
