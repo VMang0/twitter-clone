@@ -4,7 +4,7 @@ type ColorsType = {
     100: '#ddeeff';
     200: '#1da1f2';
     300: '#1879b5';
-    400: '#00BC4F4D';
+    400: '#1da1f2';
   };
   gray: {
     DEFAULT: '#fcfcfc';
@@ -44,11 +44,11 @@ type FontSizesType = {
   xs: '20px';
   s: '16px';
   m: '18px';
-  l: '35px';
+  l: '30px';
   xl: '42px';
   xxl: '60px';
   xxxl: '84px';
-  exl: '90px';
+  exl: '24px';
 };
 
 type WidthType = {
@@ -68,7 +68,7 @@ type LogoSize = {
 type LineHeightType = {
   xs: '100%';
   s: '120%';
-  m: '143%';
+  m: '150%';
   l: '187%';
 };
 type FontWeightType = {

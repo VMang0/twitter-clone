@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 
-export const Button = styled.button`
+import { ButtonType } from '@styled/components/button/types';
+
+export const Button = styled.button<ButtonType>`
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   transition: background-color 0.3s ease;
@@ -13,6 +16,9 @@ export const Button = styled.button`
   text-align: ${({ align }) => align || 'center'};
   font-size: ${({ theme, fontSize }) => (fontSize ? theme.fontSize[fontSize] : theme.fontSize.m)};
   line-height: ${({ theme, lineHeight }) => (lineHeight ? theme.lineHeight[lineHeight] : theme.lineHeight.m)};
+  &:has(img) {
+    gap: 6px;
+  }
 `;
 
 export const PrimaryButton = styled(Button)`
@@ -22,6 +28,9 @@ export const PrimaryButton = styled(Button)`
   border-radius: 42px;
   &:hover {
     background-color: ${({ theme }) => theme.colors.blue[300]};
+  }
+  &:disabled {
+    opacity: 0.4;
   }
 `;
 

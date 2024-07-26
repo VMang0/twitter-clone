@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 import { device } from '@styled/breakPoints';
+import { TextType } from '@styled/components/typography/types';
 
-export const Text = styled.p`
+export const Text = styled.p<TextType>`
   font-weight: ${({ theme, fontWeight }) => (fontWeight ? theme.fontWeight[fontWeight] : theme.fontWeight[400])};
   color: ${({ theme, color }) => (color ? theme.themeColors[color] : theme.themeColors[700])};
   text-align: ${({ align }) => align || 'start'};

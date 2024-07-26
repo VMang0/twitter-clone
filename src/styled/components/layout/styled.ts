@@ -14,3 +14,7 @@ export const FlexCenter = styled.div<FlexCenterType>`
   justify-content: center;
   gap: ${({ theme, gap }) => (gap ? theme.gap[gap] : 0)};
 `;
+
+export const PageContainer = styled.div`
+  max-height: 100%;
+`;
