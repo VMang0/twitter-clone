@@ -1,36 +1,40 @@
-import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { CreateTweet } from '@components/Forms/CreateTweet';
 import { EditProfileInfo } from '@components/Forms/EditProfileInfo';
 import { Modal } from '@components/Modal';
+import { ProfileDetails } from '@components/ProfileDetails';
 import { TweetsList } from '@components/TweetsList';
 import { Modal as ModalConst } from '@constants/modal';
-import { useAppDispatch } from '@hooks/useAppDispatch';
+import { useAuthState } from '@hooks/useAuthState';
+import { useModal } from '@hooks/useModal';
 import { useTweetsByUser } from '@hooks/useTweetsByUser';
-import { openModal } from '@redux/slices/modalSlice';
-import { userDataSelector } from '@redux/slices/userSlice/selectors';
-import { OutlineButton } from '@styled/components/button/styled';
-import { PageContainer } from '@styled/components/layout/styled';
-import { UserType } from '@type/user';
+import { ProfileContainer } from '@pages/Profile/styled';
+import { Divider } from '@styled/components/divider/styled';
 
 export const Profile = () => {
-  const dispatch = useAppDispatch();
-  const userData = useSelector(userDataSelector);
-  const { id } = userData as UserType;
-  const { tweets } = useTweetsByUser(id);
-
-  const onOpenEditProfileModal = () => dispatch(openModal(ModalConst.EDIT_PROFILE));
+  const { isModalOpen } = useModal(ModalConst.EDIT_PROFILE);
+  const { userData, id, isAuthorizedUser } = useAuthState();
+  const { id: userId } = useParams();
+  const { tweets } = useTweetsByUser(isAuthorizedUser ? (id as string) : (userId as string));
 
   return (
-    <PageContainer>
-      <OutlineButton onClick={onOpenEditProfileModal} width="150px">
-        Edit Profile
-      </OutlineButton>
-      <CreateTweet formId={ModalConst.CREATE_TWEET_PROFILE} />
+    <ProfileContainer>
+      <ProfileDetails />
+      <Divider />
+      {isAuthorizedUser && (
+        <>
+          <CreateTweet formId={ModalConst.CREATE_TWEET_PROFILE} />
+          <Divider />
+        </>
+      )}
       <TweetsList tweets={tweets} />
-      <Modal id={ModalConst.EDIT_PROFILE}>
-        <EditProfileInfo userData={userData as UserType} />
-      </Modal>
-    </PageContainer>
+
+      {isModalOpen && isAuthorizedUser && (
+        <Modal>
+          <EditProfileInfo userData={userData} />
+        </Modal>
+      )}
+    </ProfileContainer>
   );
 };
