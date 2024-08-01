@@ -1,10 +1,9 @@
-import { FC } from 'react';
+import UploadIcon from '@assets/icons/upload-icon.svg?react';
+import { FC, useCallback } from 'react';
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 
 import { saveNewTweet } from '@api/tweets/saveNewTweet';
 import { uploadImage } from '@api/tweets/uploadImage';
-import UploadIcon from '@assets/icons/upload-icon.svg';
 import NoImage from '@assets/images/no-image.png';
 import { UploadedImage } from '@components/Forms/CreateTweet/components/UploadedImage';
 import {
@@ -14,31 +13,32 @@ import {
   FileInput,
   Label,
   TweetTextArea,
-  UploadPictureIcon,
 } from '@components/Forms/CreateTweet/styled';
 import { CreateTweetFormType } from '@components/Forms/CreateTweet/types';
+import { ACCEPTED_FILES, MAX_FILE_SIZE } from '@constants/image';
 import { Modal } from '@constants/modal';
 import { useAppDispatch } from '@hooks/useAppDispatch';
-import { userDataSelector } from '@redux/slices/userSlice/selectors';
+import { useAuthState } from '@hooks/useAuthState';
+import { useModal } from '@hooks/useModal';
 import { PrimaryButton } from '@styled/components/button/styled';
 import { ProfileImage } from '@styled/components/image/styled';
 import { Loader } from '@styled/components/loader/styled';
 import { UserType } from '@type/user';
 import { handleAsyncFunc } from '@utils/handleAsyncFunc';
 
-const ACCEPTED_FILES = 'image/png,image/jpeg,image/svg+xml,image/webp';
-
 export const CreateTweet: FC<{ formId: Modal }> = ({ formId }) => {
   const dispatch = useAppDispatch();
-  const userData = useSelector(userDataSelector);
-  const { name, image, id } = userData as UserType;
+  const { userData, id } = useAuthState();
+  const { closeModal } = useModal();
+  const { image } = userData as UserType;
   const {
     register,
     handleSubmit,
     reset,
     control,
     resetField,
-    formState: { isSubmitting },
+    setError,
+    formState: { isSubmitting, errors },
   } = useForm<CreateTweetFormType>({
     mode: 'onBlur',
   });
@@ -51,35 +51,42 @@ export const CreateTweet: FC<{ formId: Modal }> = ({ formId }) => {
   const onSubmit: SubmitHandler<CreateTweetFormType> = async ({ tweetImage, tweetText }) => {
     let uploadedImageName = '';
 
+    if (tweetImage && tweetImage[0]?.size > MAX_FILE_SIZE) {
+      setError('tweetImage', { type: 'manual', message: 'File size should not exceed 5MB' });
+      return;
+    }
+
     if (tweetImage && tweetImage.length !== 0) {
       uploadedImageName = await uploadImage(tweetImage[0]);
     }
 
     await handleAsyncFunc(
       async () => {
-        await saveNewTweet({ userId: id, tweetText, tweetImage: uploadedImageName });
+        await saveNewTweet({ userId: id!, tweetText, tweetImage: uploadedImageName });
+        closeModal();
       },
       dispatch,
       () => reset(),
     );
   };
 
-  const resetSelectedFile = () => resetField('tweetImage');
+  const resetSelectedFile = useCallback(() => resetField('tweetImage'), []);
 
   return (
     <CreateTweetContainer onSubmit={handleSubmit(onSubmit)}>
-      <ProfileImage src={image || NoImage} alt={`face ${name}`} size="60px" />
+      <ProfileImage profileUrl={image || NoImage} width="w60" height="w60" />
       <CreateTweetContent>
         <TweetTextArea {...register('tweetText')} placeholder="What's happening..." maxLength={272} />
         {tweetImage && tweetImage.length !== 0 && (
           <UploadedImage resetSelectedFile={resetSelectedFile} tweetImage={tweetImage[0]} />
         )}
+        {errors.tweetImage && <span>{errors.tweetImage.message}</span>}
         <ControlPanel>
           <Label htmlFor={`upload-image-${formId}`}>
-            <UploadPictureIcon src={UploadIcon} alt="upload" />
+            <UploadIcon />
             <FileInput id={`upload-image-${formId}`} {...register('tweetImage')} type="file" accept={ACCEPTED_FILES} />
           </Label>
-          <PrimaryButton width="116px" height="50px" type="submit" disabled={isSubmitDisabled}>
+          <PrimaryButton width="w116" height="w50" type="submit" disabled={isSubmitDisabled}>
             {isSubmitting ? <Loader /> : 'Tweet'}
           </PrimaryButton>
         </ControlPanel>
