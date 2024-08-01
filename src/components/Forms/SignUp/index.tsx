@@ -2,13 +2,12 @@ import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { signUpUserWithEmail } from '@api/auth/sign-up';
-import TwitterIcon from '@assets/icons/twitter-logo-icon.svg';
+import { RegistrationForm, RegistrationLogo, SelectsContainer } from '@components/Forms/SignUp/styled';
 import { SignUpFormType } from '@components/Forms/SignUp/types';
 import { Select } from '@components/Select';
 import { Days, Months, Years } from '@constants/date';
 import { Paths } from '@constants/paths';
 import { useAppDispatch } from '@hooks/useAppDispatch';
-import { RegistrationForm, SelectsContainer } from '@pages/Registration/styled';
 import { showNotification } from '@redux/slices/modalSlice';
 import { PrimaryButton } from '@styled/components/button/styled';
 import { Input } from '@styled/components/input/styled';
@@ -22,6 +21,7 @@ import { handleAsyncFunc } from '@utils/handleAsyncFunc';
 export const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
   const {
     register,
     control,
@@ -37,6 +37,7 @@ export const SignUp = () => {
       year: '',
     },
   });
+
   const onSubmit: SubmitHandler<SignUpFormType> = async ({ month, day, year, email, password, phoneNumber, name }) => {
     const birthDate = convertAndValidateDate(Number(year), Number(month), Number(day));
     if (!birthDate) {
@@ -59,10 +60,8 @@ export const SignUp = () => {
 
   return (
     <RegistrationForm onSubmit={handleSubmit(onSubmit)}>
-      <TwitterLogo src={TwitterIcon} alt="blue bird" margin="11px" height="33px" width="40px" align="auto" />
-      <Text fontWeight={700} fontSize="l">
-        Create an account
-      </Text>
+      <TwitterLogo margin="xxxs" width="w40" height="w38" align="auto" />
+      <RegistrationLogo>Create an account</RegistrationLogo>
       <Input
         {...register('name', {
           required: true,
@@ -114,13 +113,13 @@ export const SignUp = () => {
         isError={!!errors.password}
       />
       {errors.password && errors.password.type !== 'required' && <span>{errors.password.message}</span>}
-      <Link to={Paths.SIGNIN} fontSize="m" color={800}>
+      <Link to={Paths.SIGNIN} fontSize="s" color={800}>
         Use email
       </Link>
-      <Text fontWeight={700} fontSize="m" fontFamily="secondary">
+      <Text fontWeight={700} fontSize="s" fontFamily="secondary">
         Date of birth
       </Text>
-      <Text fontSize="s" lineHeight="m">
+      <Text fontSize="xs" lineHeight="m">
         Facilisi sem pulvinar velit nunc, gravida scelerisque amet nibh sit. Quis bibendum ante phasellus metus, magna
         lacinia sed augue. Odio enim nascetur leo mauris vel eget. Pretium id ullamcorper blandit viverra dignissim eget
         tellus. Nibh mi massa in molestie a sit. Elit congue.
