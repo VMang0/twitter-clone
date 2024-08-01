@@ -7,8 +7,8 @@ export const BackgroundBlur = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(2px);
-  z-index: 4;
+  backdrop-filter: blur(5px);
+  z-index: 5;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,10 +16,11 @@ export const BackgroundBlur = styled.div`
 
 export const ModalContainer = styled.div`
   position: relative;
-  max-width: 600px;
+  max-width: ${({ theme }) => theme.width.w600};
   width: 100%;
-  margin: 0 20px;
-  padding: 20px;
-  border-radius: 20px;
-  background-color: aliceblue;
+  box-sizing: border-box;
+  margin: ${({ theme }) => `0 ${theme.spaces.s}`};
+  padding: ${({ theme }) => theme.spaces.s};
+  border-radius: ${({ theme }) => theme.borderRadius.xs};
+  background-color: ${({ theme }) => theme.themeColors.DEFAULT};
 `;
