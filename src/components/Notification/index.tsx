@@ -12,11 +12,11 @@ export const Notification = () => {
   const notificationMessage = useSelector(notificationMessageSelector);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout | number;
+    let timer: ReturnType<typeof setTimeout>;
     if (isNotificationShow) {
       timer = setTimeout(() => dispatch(hideNotification()), 3000);
     }
-    return () => clearTimeout(timer as NodeJS.Timeout);
+    return () => clearTimeout(timer);
   }, [isNotificationShow, dispatch]);
 
   if (!isNotificationShow) {

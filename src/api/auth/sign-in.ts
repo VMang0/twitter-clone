@@ -19,6 +19,9 @@ export const loginUserWithEmail = async (phoneOrEmail: string, password: string)
 
     if (checkIsValidPhone(phoneOrEmail)) {
       const email = await getUserEmailByPhone(phoneOrEmail);
+
+      if (!email) throw new Error('User with current phone number was not founded');
+
       const { user } = await signInWithEmailAndPassword(auth, email, password);
       signInUser = user;
     }

@@ -9,3 +9,7 @@ export type UserType = {
   username?: string;
   description?: string;
 };
+
+export type UserWithFollowingType = UserType & {
+  isFollow: boolean;
+};
