@@ -34,6 +34,6 @@
       "@styled/*": ["src/styled/*"]
 }
   },
-  "include": ["src", "svg.d.ts", "tests"],
+  "include": ["src", "svg.d.ts", "tests", "cypress"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

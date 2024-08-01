@@ -2,3 +2,6 @@ node_modules
 /.git
 yarn.lock
 /.eslintrc.js
+
+cypress
+cypress.config.js
