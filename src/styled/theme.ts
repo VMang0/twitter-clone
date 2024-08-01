@@ -113,7 +113,7 @@ export const theme: ThemeType = {
     xl: '50%',
   },
   spaces: {
-    0: '0',
+    '0': '0',
     exs: '4px',
     xxxs: '10px',
     xxs: '15px',

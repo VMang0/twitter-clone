@@ -4,6 +4,8 @@ import { ArrowIcon, SelectInput, SelectList, SelectListItem, SelectWrapper } fro
 import { OptionType, SelectPropsType } from '@components/Select/types';
 import { useClickOutside } from '@hooks/useClickOutside';
 
+import { DATA_TEST_ID } from '../../../cypress/e2e/data';
+
 export const Select: FC<SelectPropsType> = ({ options, placeholder, value, onChange, isError }) => {
   const [isOpen, setIsOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
@@ -24,15 +26,19 @@ export const Select: FC<SelectPropsType> = ({ options, placeholder, value, onCha
   useClickOutside(selectRef, hideSelect);
 
   return (
-    <SelectWrapper ref={selectRef}>
+    <SelectWrapper ref={selectRef} data-test-id={DATA_TEST_ID.SELECT}>
       <SelectInput isOpen={isOpen} isError={isError} onClick={showSelect}>
         {selectedOption?.label || placeholder}
         <ArrowIcon />
       </SelectInput>
       {isOpen && (
-        <SelectList>
+        <SelectList data-test-id={DATA_TEST_ID.SELECT_LIST}>
           {options?.map((option) => (
-            <SelectListItem key={option.value} onClick={handleOptionClick(option)}>
+            <SelectListItem
+              key={option.value}
+              onClick={handleOptionClick(option)}
+              data-test-id={`select-item-${option.label}`}
+            >
               {option.label}
             </SelectListItem>
           ))}

@@ -20,7 +20,7 @@ export const Navbar = () => {
     <>
       <NavbarContainer>
         <NavbarContent>
-          <TwitterLogo width="w40" height="w38" margin={0} />
+          <TwitterLogo width="w40" height="w38" margin="0" />
           <NavbarList>
             {navbar.map((item) => (
               <NavbarItem key={item.label} item={item} />

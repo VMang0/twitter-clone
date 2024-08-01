@@ -54,8 +54,8 @@ export const Days = Array.from({ length: 31 }, (_, index) => ({
   label: (index + 1).toString(),
 }));
 
-export const Years = Array.from({ length: 201 }, (_, index) => {
-  const year = 1900 + index;
+export const Years = Array.from({ length: 100 }, (_, index) => {
+  const year = 1925 + index;
   return {
     value: year,
     label: year.toString(),

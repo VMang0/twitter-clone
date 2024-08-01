@@ -17,3 +17,8 @@ export const Text = styled.p<TextType>`
     font-size: ${({ theme, smallSize }) => (smallSize ? theme.fontSize[smallSize] : theme.fontSize.xxs)};
   }
 `;
+
+export const ErrorText = styled.span`
+  font-size: ${({ theme }) => theme.fontSize.xxs};
+  color: red;
+`;

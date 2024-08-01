@@ -1,7 +1,9 @@
-import { SubmitHandler } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { loginUserWithEmail, signInWithGoogle } from '@api/auth/sign-in';
+import { signInSchema } from '@components/Forms/SignIn/schema';
 import { SignInFormType } from '@components/Forms/SignIn/types';
 import { Paths } from '@constants/paths';
 import { useAppDispatch } from '@hooks/useAppDispatch';
@@ -12,6 +14,15 @@ import { handleAsyncFunc } from '@utils/handleAsyncFunc';
 export const useSignIn = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<SignInFormType>({
+    resolver: yupResolver(signInSchema),
+    mode: 'onBlur',
+  });
 
   const handleUserData = async (getUserData: () => Promise<unknown>) => {
     await handleAsyncFunc(async () => {
@@ -36,5 +47,11 @@ export const useSignIn = () => {
     await handleUserData(signInWithGoogle);
   };
 
-  return { onSubmit, onGoogleClick };
+  return {
+    register,
+    handleSubmit: handleSubmit(onSubmit),
+    errors,
+    isSubmitting,
+    onGoogleClick,
+  };
 };

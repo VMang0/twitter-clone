@@ -23,6 +23,8 @@ import { useModal } from '@hooks/useModal';
 import { UserType } from '@type/user';
 import { handleAsyncFunc } from '@utils/handleAsyncFunc';
 
+import { DATA_TEST_ID } from '../../../cypress/e2e/data';
+
 export const ProfileDetails = () => {
   const dispatch = useAppDispatch();
   const { openModal } = useModal();
@@ -56,7 +58,11 @@ export const ProfileDetails = () => {
     <ProfileContainer>
       <HeaderImage>
         <Avatar profileUrl={image || AvatarUrl} />
-        {isAuthorizedUser && <EditButton onClick={onOpenEditProfileModal}>Edit Profile</EditButton>}
+        {isAuthorizedUser && (
+          <EditButton onClick={onOpenEditProfileModal} data-test-id={DATA_TEST_ID.UPDATE_PROFILE}>
+            Edit Profile
+          </EditButton>
+        )}
       </HeaderImage>
       <ProfileInfo>
         <Name>{name}</Name>

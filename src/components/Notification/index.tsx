@@ -6,6 +6,8 @@ import { useAppDispatch } from '@hooks/useAppDispatch';
 import { hideNotification } from '@redux/slices/modalSlice';
 import { isNotificationShowSelector, notificationMessageSelector } from '@redux/slices/modalSlice/selectors';
 
+import { DATA_TEST_ID } from '../../../cypress/e2e/data';
+
 export const Notification = () => {
   const dispatch = useAppDispatch();
   const isNotificationShow = useSelector(isNotificationShowSelector);
@@ -24,7 +26,7 @@ export const Notification = () => {
   }
 
   return (
-    <NotificationContainer>
+    <NotificationContainer data-test-id={DATA_TEST_ID.NOTIFICATION}>
       <NotificationWrapper>{notificationMessage}</NotificationWrapper>
     </NotificationContainer>
   );

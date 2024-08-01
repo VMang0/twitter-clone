@@ -2,6 +2,6 @@ export type EditProfileInfoFormType = {
   phoneNumber: string;
   name: string;
   description?: string;
-  username?: string;
-  image?: string | FileList | null;
+  username: string;
+  image?: string | null;
 };

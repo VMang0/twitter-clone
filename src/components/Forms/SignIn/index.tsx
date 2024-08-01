@@ -1,7 +1,4 @@
-import { useForm } from 'react-hook-form';
-
 import { Divider, LoginForm, LoginLogo } from '@components/Forms/SignIn/styled';
-import { SignInFormType } from '@components/Forms/SignIn/types';
 import { Paths } from '@constants/paths';
 import { useSignIn } from '@hooks/useSignIn';
 import { OutlineButton, PrimaryButton } from '@styled/components/button/styled';
@@ -11,17 +8,10 @@ import { Loader } from '@styled/components/loader/styled';
 import { GoogleLogo, TwitterLogo } from '@styled/components/logo/styled';
 
 export const SignIn = () => {
-  const { onSubmit, onGoogleClick } = useSignIn();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<SignInFormType>({
-    mode: 'onBlur',
-  });
+  const { onGoogleClick, handleSubmit, isSubmitting, register, errors } = useSignIn();
 
   return (
-    <LoginForm onSubmit={handleSubmit(onSubmit)}>
+    <LoginForm onSubmit={handleSubmit}>
       <TwitterLogo margin="xxxs" />
       <LoginLogo>Log in to Twitter</LoginLogo>
       <OutlineButton type="button" fontWeight={500} fontSize="m" onClick={onGoogleClick}>
@@ -29,17 +19,8 @@ export const SignIn = () => {
         Sign in with Google
       </OutlineButton>
       <Divider>or</Divider>
-      <Input
-        {...register('phoneOrEmail', { required: true })}
-        placeholder="Phone number, email address"
-        isError={!!errors.phoneOrEmail}
-      />
-      <Input
-        {...register('password', { required: true })}
-        placeholder="Password"
-        type="password"
-        isError={!!errors.password}
-      />
+      <Input {...register('phoneOrEmail')} placeholder="Phone number, email address" isError={!!errors.phoneOrEmail} />
+      <Input {...register('password')} placeholder="Password" type="password" isError={!!errors.password} />
       <PrimaryButton type="submit" fontWeight={700} height="w60">
         {isSubmitting ? <Loader /> : 'Log in'}
       </PrimaryButton>

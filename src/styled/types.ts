@@ -115,7 +115,7 @@ type BorderRadiusType = {
 };
 
 type SpacesType = {
-  0: '0';
+  '0': '0';
   exs: '4px';
   xxxs: '10px';
   xxs: '15px';
