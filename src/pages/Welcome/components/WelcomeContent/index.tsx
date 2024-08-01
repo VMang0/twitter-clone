@@ -1,12 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 
 import { signUpWithGoogle } from '@api/auth/sign-up';
-import GoogleLogoPath from '@assets/icons/google-icon.svg';
-import TwitterIcon from '@assets/icons/twitter-logo-icon.svg';
 import { Paths } from '@constants/paths';
 import { useAppDispatch } from '@hooks/useAppDispatch';
-import { WelcomeContentContainer } from '@pages/Welcome/components/WelcomeContent/styled';
-import { OutlineButton } from '@styled/components/button/styled';
+import { WelcomeContentContainer, WelcomeSighUpButton } from '@pages/Welcome/components/WelcomeContent/styled';
+import { WelcomeText } from '@pages/Welcome/components/WelcomeText';
 import { Link } from '@styled/components/link/styled';
 import { GoogleLogo, TwitterLogo } from '@styled/components/logo/styled';
 import { Text } from '@styled/components/typography/styled';
@@ -27,40 +25,22 @@ export const WelcomeContent = () => {
 
   return (
     <WelcomeContentContainer>
-      <TwitterLogo src={TwitterIcon} alt="blue bird" />
-      <Text fontWeight={900} fontSize="xxxl">
+      <TwitterLogo />
+      <Text fontWeight={900} fontSize="exl" mediumSize="xxxl" smallSize="xxl">
         Happening now
       </Text>
-      <Text fontWeight={900} fontSize="xl">
+      <Text fontWeight={900} fontSize="xxl" mediumSize="xl" smallSize="m">
         Join Twitter today
       </Text>
-      <OutlineButton width="55%" fontWeight={500} fontSize="xs" onClick={onGoogleClick}>
-        <GoogleLogo src={GoogleLogoPath} alt="google" />
+      <WelcomeSighUpButton onClick={onGoogleClick}>
+        <GoogleLogo />
         Sign up with Google
-      </OutlineButton>
-      <OutlineButton width="55%" fontWeight={500} fontSize="xs" onClick={navigateToSignUp}>
-        Sign up with email
-      </OutlineButton>
-      <Text>
-        By singing up you agree to the{' '}
-        <Link to="/" color={800}>
-          Terms of Service
-        </Link>{' '}
-        and{' '}
-        <Link to="/" color={800}>
-          {' '}
-          Privacy Policy
-        </Link>
-        ,
-        <br /> including{' '}
-        <Link to="/" color={800}>
-          Cookie Use
-        </Link>{' '}
-        .
-      </Text>
-      <Text fontSize="s">
+      </WelcomeSighUpButton>
+      <WelcomeSighUpButton onClick={navigateToSignUp}>Sign up with email</WelcomeSighUpButton>
+      <WelcomeText />
+      <Text fontSize="xs">
         Already have an account?{' '}
-        <Link to={Paths.SIGNIN} color={800} fontSize="s">
+        <Link to={Paths.SIGNIN} color={800} fontSize="xs">
           Log in
         </Link>
       </Text>
