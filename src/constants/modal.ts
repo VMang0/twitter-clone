@@ -3,4 +3,6 @@ export enum Modal {
   CREATE_TWEET_FEED = 'create_tweet_feed',
   CREATE_TWEET_PROFILE = 'create_tweet_profile',
   EDIT_PROFILE = 'edit_profile',
+  REMOVE_TWEET = 'remove_tweet',
+  ADD_USERNAME = 'add_username',
 }
