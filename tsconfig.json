@@ -5,7 +5,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-
+    "types": ["vite-plugin-svgr/client", "jest"],
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
@@ -31,9 +31,9 @@
       "@redux/*": ["src/redux/*"],
       "@services/*": ["src/services/*"],
       "@type/*": ["src/type/*"],
-      "@styled/*": ["src/styled/*"],
+      "@styled/*": ["src/styled/*"]
 }
   },
-  "include": ["src"],
+  "include": ["src", "svg.d.ts", "tests"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

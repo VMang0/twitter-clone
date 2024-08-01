@@ -6,5 +6,5 @@ import { useAuthState } from '@hooks/useAuthState';
 export const AuthRoute = () => {
   const { isAuthenticated } = useAuthState();
 
-  return isAuthenticated ? <Outlet /> : <Navigate to={Paths.SIGNIN} replace />;
+  return isAuthenticated ? <Outlet /> : <Navigate to={Paths.WELCOME} replace />;
 };

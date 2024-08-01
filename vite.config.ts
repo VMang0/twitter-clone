@@ -1,17 +1,18 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
 import path from 'path';
+
+import react from '@vitejs/plugin-react-swc';
+import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
-  plugins: [react(), svgr()],
+  plugins: [svgr(), react()],
   server: {
     host: true,
     port: 3000,
   },
   resolve: {
     alias: {
-      '@api': path.resolve(__dirname, 'api'),
+      '@api': path.resolve(__dirname, 'src/api'),
       '@components': path.resolve(__dirname, 'src/components'),
       '@constants': path.resolve(__dirname, 'src/constants'),
       '@hooks': path.resolve(__dirname, 'src/hooks'),
@@ -25,4 +26,4 @@ export default defineConfig({
       '@services': path.resolve(__dirname, 'src/services'),
     },
   },
-})
+});
