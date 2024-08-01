@@ -3,4 +3,5 @@ export type EditProfileInfoFormType = {
   name: string;
   description?: string;
   username?: string;
+  image?: string | FileList | null;
 };

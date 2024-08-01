@@ -1,11 +1,17 @@
-import { FC } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { uploadImage } from '@api/tweets/uploadImage';
 import { updateUserInfo } from '@api/user/updateUserInfo';
-import { EditProfileInfoForm } from '@components/Forms/EditProfileInfo/styled';
+import AvatarUrl from '@assets/images/no-image.png';
+import { CancelPictureButton } from '@components/Forms/CreateTweet/components/UploadedImage/styled';
+import { FileInput, Label } from '@components/Forms/CreateTweet/styled';
+import { EditProfileInfoForm, ImageContainer, ProfileEditAvatar } from '@components/Forms/EditProfileInfo/styled';
 import { EditProfileInfoFormType } from '@components/Forms/EditProfileInfo/types';
+import { ACCEPTED_FILES } from '@constants/image';
 import { useAppDispatch } from '@hooks/useAppDispatch';
-import { closeModal, showNotification } from '@redux/slices/modalSlice';
+import { useModal } from '@hooks/useModal';
+import { showNotification } from '@redux/slices/modalSlice';
 import { authorizeAndAddUserData } from '@redux/slices/userSlice/thunk';
 import { PrimaryButton } from '@styled/components/button/styled';
 import { Input, TextArea } from '@styled/components/input/styled';
@@ -16,14 +22,17 @@ import { handleAsyncFunc } from '@utils/handleAsyncFunc';
 
 export const EditProfileInfo: FC<{ userData: UserType }> = ({ userData }) => {
   const dispatch = useAppDispatch();
+  const { closeModal } = useModal();
   const {
     register,
     handleSubmit,
     reset,
+    resetField,
     formState: { errors, isSubmitting },
   } = useForm<EditProfileInfoFormType>({
     mode: 'onBlur',
     defaultValues: {
+      image: userData.image || AvatarUrl,
       phoneNumber: userData.phoneNumber || '',
       name: userData.name || '',
       description: userData.description || '',
@@ -31,10 +40,24 @@ export const EditProfileInfo: FC<{ userData: UserType }> = ({ userData }) => {
     },
   });
 
-  const onSubmit: SubmitHandler<EditProfileInfoFormType> = async ({ phoneNumber, name, description, username }) => {
+  const [image, setImage] = useState<string>(userData.image || AvatarUrl);
+
+  const onSubmit: SubmitHandler<EditProfileInfoFormType> = async ({
+    phoneNumber,
+    name,
+    description,
+    username,
+    image,
+  }) => {
     await handleAsyncFunc(
       async () => {
-        await updateUserInfo(userData.id, { username, description, phoneNumber, name });
+        let uploadedImageName = '';
+
+        if (image && image.length !== 0) {
+          uploadedImageName = await uploadImage(image[0] as File);
+        }
+
+        await updateUserInfo(userData.id, { username, description, phoneNumber, name, image: uploadedImageName });
         dispatch(
           authorizeAndAddUserData({
             ...userData,
@@ -42,21 +65,51 @@ export const EditProfileInfo: FC<{ userData: UserType }> = ({ userData }) => {
             description,
             phoneNumber,
             name,
+            image: uploadedImageName,
           }),
         );
         dispatch(showNotification('Profile info was updated!'));
-        dispatch(closeModal());
+        closeModal();
       },
       dispatch,
       () => reset(),
     );
   };
 
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const resetSelectedFile = () => {
+    resetField('image');
+    setImage('');
+  };
+
   return (
     <EditProfileInfoForm onSubmit={handleSubmit(onSubmit)}>
-      <Text fontWeight={700} fontSize="l">
+      <Text fontWeight={700} fontSize="xl">
         Update Profile
       </Text>
+      <ImageContainer>
+        <Label htmlFor="upload-update-image">
+          <ProfileEditAvatar profileUrl={image || AvatarUrl} />
+          <FileInput
+            id="upload-update-image"
+            {...register('image')}
+            type="file"
+            accept={ACCEPTED_FILES}
+            onChange={handleImageChange}
+          />
+        </Label>
+        <CancelPictureButton onClick={resetSelectedFile} />
+      </ImageContainer>
       <Input
         {...register('name', {
           required: true,
@@ -71,6 +124,7 @@ export const EditProfileInfo: FC<{ userData: UserType }> = ({ userData }) => {
       {errors.name && errors.name.type !== 'required' && <span>{errors.name.message}</span>}
       <Input
         {...register('username', {
+          required: true,
           pattern: {
             value: /^[A-Za-zА-Яа-я\s]+$/,
             message: 'Username can only contain Latin and Russian letters.',
