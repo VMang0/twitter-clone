@@ -1,22 +1,25 @@
 import { FC } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { NavbarIcon, NavbarItemContainer, NavbarItemLink } from '@components/Sidebar/components/NavbarItem/styled';
+import { NavbarItemContainer, NavbarItemLink, NavbarItemText } from '@components/Sidebar/components/NavbarItem/styled';
 import { NavBarItemType } from '@constants/navbar';
-import { Text } from '@styled/components/typography/styled';
+import { Paths } from '@constants/paths';
+import { useAuthState } from '@hooks/useAuthState';
 
 export const NavbarItem: FC<{ item: NavBarItemType }> = ({ item }) => {
+  const { label, link, Icon } = item;
   const { pathname } = useLocation();
+  const { id } = useAuthState();
 
-  const isActivateLink = pathname === item.link;
+  const isActivateLink = pathname.includes(link);
+
+  const linkToPage = link.includes(Paths.PROFILE) ? `${Paths.PROFILE}/${id}` : link;
 
   return (
     <NavbarItemContainer>
-      <NavbarItemLink to={item.link} isActivateLink={isActivateLink}>
-        <NavbarIcon src={item.icon} alt={item.label} />
-        <Text fontWeight={600} fontSize="m">
-          {item.label}
-        </Text>
+      <NavbarItemLink to={linkToPage} isActivateLink={isActivateLink}>
+        <Icon />
+        <NavbarItemText>{label}</NavbarItemText>
       </NavbarItemLink>
     </NavbarItemContainer>
   );

@@ -1,3 +1,4 @@
+import ArrowDropUpIcon from '@assets/icons/arrow-icon.svg?react';
 import styled from 'styled-components';
 
 export const SelectWrapper = styled.div`
@@ -10,19 +11,22 @@ export const SelectWrapper = styled.div`
 export const SelectInput = styled.div<{ isOpen: boolean; isError: boolean }>`
   width: 100%;
   height: 70px;
-  border: 1px solid ${({ isError }) => (isError ? 'red' : 'rgba(0, 0, 0, 0.2)')};
+  border: 1px solid ${({ theme, isError }) => (isError ? 'red' : theme.themeColors[500])};
   border-radius: 6px;
   padding: 20px 23px;
   position: relative;
   display: flex;
   align-items: center;
   font-size: ${({ theme }) => theme.fontSize.m};
-  color: rgba(0, 0, 0, 0.6);
-  img {
+  color: ${({ theme }) => theme.themeColors[500]};
+  svg {
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translate(-50%, -50%) ${({ isOpen }) => (isOpen ? 'rotate(180deg)' : 'rotate(0)')};
+    path {
+      fill: ${({ theme }) => theme.themeColors[500]};
+    }
   }
   box-sizing: border-box;
 `;
@@ -51,7 +55,7 @@ export const SelectListItem = styled.li`
   }
 `;
 
-export const ArrowIcon = styled.img`
+export const ArrowIcon = styled(ArrowDropUpIcon)`
   width: 15px;
   filter: invert(0) sepia(0) hue-rotate(0deg) saturate(0%) opacity(0.6);
 `;
