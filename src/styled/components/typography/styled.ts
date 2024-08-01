@@ -11,7 +11,7 @@ export const Text = styled.p<TextType>`
   line-height: ${({ theme, lineHeight }) => (lineHeight ? theme.lineHeight[lineHeight] : theme.lineHeight.m)};
   font-family: ${({ theme, fontFamily }) => (fontFamily ? theme.fonts[fontFamily] : theme.fonts.main)};
   @media (${device.md}) {
-    font-size: ${({ theme, mediumSize }) => (mediumSize ? theme.fontSize[mediumSize] : theme.fontSize.xs)};
+    font-size: ${({ theme, mediumSize }) => (mediumSize ? theme.fontSize[mediumSize] : theme.fontSize.xxs)};
   }
   @media (${device.xs}) {
     font-size: ${({ theme, smallSize }) => (smallSize ? theme.fontSize[smallSize] : theme.fontSize.xxs)};
