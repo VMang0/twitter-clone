@@ -1,5 +1,7 @@
+import { MouseEventHandler } from 'react';
+
 export type LikesPropsType = {
   isLiked: boolean;
   likeCount: number;
-  handleLike: () => void;
+  handleLike: MouseEventHandler<HTMLDivElement>;
 };
