@@ -2,16 +2,18 @@ import { FC, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import NoImage from '@assets/images/no-image.png';
-import { ProfileInfo, ProfileSectionContainer, SubscribeButton } from '@components/ProfileSection/styled';
+import { LogoutButton, ProfileInfo, ProfileSectionContainer, SubscribeButton } from '@components/ProfileSection/styled';
 import { ProfileSectionType } from '@components/ProfileSection/type';
 import { Paths } from '@constants/paths';
+import { useAuthState } from '@hooks/useAuthState';
 import { ProfileImage } from '@styled/components/image/styled';
 import { Text } from '@styled/components/typography/styled';
 
 export const ProfileSection: FC<ProfileSectionType> = memo(
-  ({ isSubscribe = false, isNavigateToProfile = false, ...profileData }) => {
+  ({ isSubscribe = false, isLogout = false, isNavigateToProfile = false, ...profileData }) => {
     const { image, username, name, id } = profileData;
     const navigate = useNavigate();
+    const { logout } = useAuthState();
 
     const navigateToProfile = () => isNavigateToProfile && navigate(`${Paths.PROFILE}/${id}`);
 
@@ -25,6 +27,7 @@ export const ProfileSection: FC<ProfileSectionType> = memo(
           <Text fontSize="xs">@{username ?? 'unknown'}</Text>
         </ProfileInfo>
         {isSubscribe && <SubscribeButton>Follow</SubscribeButton>}
+        {isLogout && <LogoutButton onClick={logout} />}
       </ProfileSectionContainer>
     );
   },

@@ -53,6 +53,7 @@ type FontSizesType = {
 };
 
 type WidthType = {
+  w20: '20px';
   w25: '25px';
   w40: '40px';
   w50: '50px';
@@ -70,6 +71,7 @@ type WidthType = {
   w1580: '1580px';
 };
 type HeightType = {
+  w20: '20px';
   w25: '25px';
   w28: '28px';
   w38: '38px';

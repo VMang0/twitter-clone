@@ -1,4 +1,4 @@
-import { authorizeUser } from '@redux/slices/userSlice/index';
+import { authorizeUser, logoutUser } from '@redux/slices/userSlice/index';
 import { AppDispatch, AppThunk } from '@redux/store';
 import { UserType } from '@type/user';
 
@@ -10,3 +10,8 @@ export const authorizeAndAddUserData =
     localStorage.setItem('user', JSON.stringify(newUserData));
     dispatch(authorizeUser(newUserData));
   };
+
+export const signOut = (): AppThunk => (dispatch: AppDispatch) => {
+  localStorage.removeItem('user');
+  dispatch(logoutUser());
+};

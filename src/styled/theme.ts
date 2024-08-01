@@ -55,6 +55,7 @@ export const theme: ThemeType = {
     exl: '84px',
   },
   width: {
+    w20: '20px',
     w25: '25px',
     w40: '40px',
     w50: '50px',
@@ -72,6 +73,7 @@ export const theme: ThemeType = {
     w1580: '1580px',
   },
   height: {
+    w20: '20px',
     w25: '25px',
     w28: '28px',
     w38: '38px',

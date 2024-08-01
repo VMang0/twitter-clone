@@ -30,7 +30,7 @@ export const Navbar = () => {
             Tweet
           </PrimaryButton>
         </NavbarContent>
-        <ProfileSection {...userData} />
+        <ProfileSection {...userData} isLogout />
       </NavbarContainer>
 
       {isModalOpen && (
