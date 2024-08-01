@@ -1,7 +1,9 @@
 import { StrictMode } from 'react';
 import { createRoot, Root } from 'react-dom/client';
+import { Provider } from 'react-redux';
 
 import { App } from '@components/App';
+import { store } from '@redux/store';
 
 const rootContainer = document.getElementById('root');
 if (!rootContainer) {
@@ -11,6 +13,8 @@ if (!rootContainer) {
 const root: Root = createRoot(rootContainer);
 root.render(
   <StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </StrictMode>,
 );
