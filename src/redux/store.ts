@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import loaderReducer from '@redux/slices/loaderSlice';
 import modalReducer from '@redux/slices/modalSlice';
 import themeReducer from '@redux/slices/themeSlice';
 import userReducer from '@redux/slices/userSlice';
@@ -9,6 +10,7 @@ export const store = configureStore({
     modal: modalReducer,
     user: userReducer,
     theme: themeReducer,
+    loader: loaderReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
