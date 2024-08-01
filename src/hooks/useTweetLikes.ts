@@ -1,9 +1,8 @@
-import { useSelector } from 'react-redux';
+import { MouseEventHandler } from 'react';
 
 import { updateTweetLikes } from '@api/tweets/updateTweetLikes';
 import { useAppDispatch } from '@hooks/useAppDispatch';
-import { userDataSelector } from '@redux/slices/userSlice/selectors';
-import { UserType } from '@type/user';
+import { useAuthState } from '@hooks/useAuthState';
 import { checkIsArrayIncludeValue } from '@utils/checkIsArrayIncludeValue';
 import { handleAsyncFunc } from '@utils/handleAsyncFunc';
 
@@ -14,11 +13,11 @@ type UseTweetLikesParamsType = {
 
 export const useTweetLikes = ({ likedArray, tweetId }: UseTweetLikesParamsType) => {
   const dispatch = useAppDispatch();
-  const userData = useSelector(userDataSelector);
-  const { id } = userData as UserType;
+  const { id } = useAuthState();
   const isLiked = checkIsArrayIncludeValue(likedArray, id);
 
-  const handleLike = async () => {
+  const handleLike: MouseEventHandler<HTMLDivElement> = async (e) => {
+    e.stopPropagation();
     await handleAsyncFunc(async () => {
       await updateTweetLikes(isLiked, tweetId, id);
     }, dispatch);
