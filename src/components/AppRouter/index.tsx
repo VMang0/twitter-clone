@@ -9,6 +9,7 @@ import { Feed } from '@pages/Feed';
 import { Login } from '@pages/Login';
 import { Profile } from '@pages/Profile';
 import { Registration } from '@pages/Registration';
+import { Tweet } from '@pages/Tweet';
 import { Welcome } from '@pages/Welcome';
 
 export const Routes: FC = () => (
@@ -23,7 +24,8 @@ export const Routes: FC = () => (
       <Route element={<AuthRoute />}>
         <Route element={<Content />}>
           <Route path={Paths.FEED} element={<Feed />} />
-          <Route path={Paths.PROFILE} element={<Profile />} />
+          <Route path={Paths.PROFILE + Paths.ID} element={<Profile />} />
+          <Route path={Paths.TWEET + Paths.ID} element={<Tweet />} />
         </Route>
       </Route>
 
