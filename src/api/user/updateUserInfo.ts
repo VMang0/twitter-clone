@@ -5,10 +5,11 @@ import { handleError } from '@utils/handleError';
 import { db } from '../../firebase';
 
 type UpdateUserInfoType = {
-  phoneNumber: string;
+  phoneNumber?: string;
   name: string;
   username?: string;
   description?: string;
+  image?: string | null;
 };
 
 export const updateUserInfo = async (id: string, data: UpdateUserInfoType) => {
@@ -17,7 +18,7 @@ export const updateUserInfo = async (id: string, data: UpdateUserInfoType) => {
 
     await updateDoc(usersCollectionRef, {
       ...data,
-      username: data?.username || null,
+      image: data?.image || null,
       description: data?.description || null,
     });
   } catch (error: unknown) {
