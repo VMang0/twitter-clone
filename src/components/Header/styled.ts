@@ -5,12 +5,9 @@ export const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 25px;
-  border-bottom: 1px solid #c4c4c4;
+  padding: ${({ theme }) => theme.spaces.m};
   background-color: transparent;
   backdrop-filter: blur(12px);
   top: -0.1px;
   z-index: 3;
 `;
-
-export const ArrowBack = styled.img``;
