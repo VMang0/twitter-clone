@@ -1,7 +1,7 @@
 export enum Paths {
   SIGNIN = '/sign-in',
   SIGNUP = '/sign-up',
-  WELCOME = '/welcome',
+  WELCOME = '/',
   FEED = '/feed',
   TWEET = '/tweet',
   PROFILE = '/profile',
