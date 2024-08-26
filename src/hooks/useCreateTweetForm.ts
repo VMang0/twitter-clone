@@ -35,6 +35,7 @@ export const useCreateTweetForm = () => {
 
   const onSubmit: SubmitHandler<CreateTweetFormType> = async ({ tweetImage, tweetText }) => {
     let uploadedImageName = '';
+    const text = tweetText || '';
 
     if (tweetImage && tweetImage.length !== 0) {
       uploadedImageName = await uploadImage(tweetImage[0]);
@@ -42,7 +43,7 @@ export const useCreateTweetForm = () => {
 
     await handleAsyncFunc(
       async () => {
-        await saveNewTweet({ userId: id!, tweetText, tweetImage: uploadedImageName });
+        await saveNewTweet({ userId: id!, tweetText: text, tweetImage: uploadedImageName });
         closeModal();
       },
       dispatch,

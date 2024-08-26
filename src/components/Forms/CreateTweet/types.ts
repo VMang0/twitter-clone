@@ -1,4 +1,4 @@
 export type CreateTweetFormType = {
-  tweetText: string;
-  tweetImage: FileList | null;
+  tweetText?: string;
+  tweetImage?: FileList | null;
 };

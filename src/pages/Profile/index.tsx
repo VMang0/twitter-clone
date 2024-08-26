@@ -15,8 +15,12 @@ import { Divider } from '@styled/components/divider/styled';
 export const Profile = () => {
   const { isModalOpen } = useModal(ModalConst.EDIT_PROFILE);
   const { userData, id, isAuthorizedUser } = useAuthState();
-  const { id: userId } = useParams();
-  const { tweets } = useTweetsByUser(isAuthorizedUser ? (id as string) : (userId as string));
+  const { id: userIdFromParams } = useParams<{ id?: string }>();
+
+  const userId = userIdFromParams || null;
+  const effectiveId = isAuthorizedUser ? id : userId;
+
+  const { tweets } = useTweetsByUser(effectiveId);
 
   return (
     <ProfileContainer>

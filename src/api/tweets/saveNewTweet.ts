@@ -8,7 +8,7 @@ export const saveNewTweet = async ({
   userId,
   tweetText,
   tweetImage,
-}: Pick<TweetType, 'userId' | 'tweetText' | 'tweetImage'>) => {
+}: Required<Pick<TweetType, 'userId' | 'tweetText' | 'tweetImage'>>) => {
   const tweetsCollectionRef = collection(db, 'tweets');
 
   const newTweet = await addDoc(tweetsCollectionRef, {
