@@ -19,7 +19,7 @@ export const useAuthState = () => {
   };
 
   return {
-    id: userData?.id,
+    id: userData?.id || '',
     isAuthenticated,
     userData,
     isAuthorizedUser,

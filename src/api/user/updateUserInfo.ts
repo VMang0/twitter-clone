@@ -8,7 +8,7 @@ type UpdateUserInfoType = {
   phoneNumber?: string;
   name: string;
   username?: string;
-  description?: string;
+  description?: string | null;
   image?: string | null;
 };
 

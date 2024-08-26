@@ -7,7 +7,7 @@ export type UserType = {
   name: string;
   image?: string | null;
   username?: string;
-  description?: string;
+  description?: string | null;
 };
 
 export type UserWithFollowingType = UserType & {

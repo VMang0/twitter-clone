@@ -31,7 +31,7 @@ export const Feed = () => {
       <TweetsList tweets={tweets} />
 
       {isModalOpen && (
-        <Modal isClosed={false}>
+        <Modal isCloseable={false}>
           <AddUsername />
         </Modal>
       )}

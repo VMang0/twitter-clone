@@ -1,1 +1,3 @@
-export const checkIsValidEmail = (value: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+import { EMAIL_REGEX } from '@constants/regexp';
+
+export const checkIsValidEmail = (value: string): boolean => EMAIL_REGEX.test(value);

@@ -9,12 +9,12 @@ import { useBodyOverflow } from '@hooks/useBodyOverflow';
 import { useModal } from '@hooks/useModal';
 import { isModalOpenSelector } from '@redux/slices/modalSlice/selectors';
 
-export const Modal: FC<ModalPropsType> = memo(({ children, isClosed = true }) => {
+export const Modal: FC<ModalPropsType> = memo(({ children, isCloseable = true }) => {
   const { closeModal } = useModal();
   const isModalOpen = useSelector(isModalOpenSelector);
 
   const handleCloseModal = () => {
-    if (isClosed) closeModal();
+    if (isCloseable) closeModal();
   };
 
   const stopPropagation: MouseEventHandler<HTMLDivElement> = (e) => e.stopPropagation();
@@ -25,7 +25,7 @@ export const Modal: FC<ModalPropsType> = memo(({ children, isClosed = true }) =>
     <Portal>
       <BackgroundBlur onClick={handleCloseModal}>
         <ModalContainer onClick={stopPropagation}>
-          {isClosed && <CancelPictureButton onClick={handleCloseModal} />}
+          {isCloseable && <CancelPictureButton onClick={handleCloseModal} />}
           {children}
         </ModalContainer>
       </BackgroundBlur>

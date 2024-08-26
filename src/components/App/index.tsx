@@ -10,8 +10,10 @@ import { GlobalStyles } from '@styled/global';
 export const App: FC = () => {
   const { currentTheme } = useTheme();
 
+  const validateForwardProp = (prop: string) => isPropValid(prop);
+
   return (
-    <StyleSheetManager shouldForwardProp={(prop) => isPropValid(prop)}>
+    <StyleSheetManager shouldForwardProp={validateForwardProp}>
       <ThemeProvider theme={currentTheme}>
         <Notification />
         <GlobalStyles />
